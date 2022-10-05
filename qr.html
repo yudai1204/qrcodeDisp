@@ -10,12 +10,22 @@
 <script type="text/javascript" src="qrcode.min.js"></script>
 <script type="text/javascript">
     const params = (new URL(document.location)).searchParams;
-    const qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: params.get("convertText"),
-        width: 512,
-        height: 512,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.M
-    });
+    // CSV読み込み
+    fetch("hazure.csv")
+    .then(response => response.text())
+    .then(data => {
+        const hazures = data.replace(/[^0-9|,]/g,"").split(",");
+        if(hazures.includes(params.get("convertText"))){
+            alert("はずれ");
+        }
+        // QRコード生成
+        const qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: params.get("convertText"),
+            width: 512,
+            height: 512,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    })
 </script>

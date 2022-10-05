@@ -1,3 +1,9 @@
+<style>
+    #qrcode > img{
+        width: min(90%,800px);
+        margin: 10vh auto;
+    }
+</style>
 <div id="qrcode">
 </div>
 
@@ -6,8 +12,8 @@
     const params = (new URL(document.location)).searchParams;
     const qrcode = new QRCode(document.getElementById("qrcode"), {
         text: params.get("convertText"),
-        width: 128,
-        height: 128,
+        width: 512,
+        height: 512,
         colorDark: "#000000",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.M

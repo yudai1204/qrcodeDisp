@@ -1,31 +1,52 @@
-<style>
-    #qrcode > img{
-        width: min(90%,800px);
-        margin: 10vh auto;
-    }
-</style>
-<div id="qrcode">
-</div>
-
-<script type="text/javascript" src="qrcode.min.js"></script>
-<script type="text/javascript">
-    const params = (new URL(document.location)).searchParams;
-    // CSV読み込み
-    fetch("hazure.csv")
-    .then(response => response.text())
-    .then(data => {
-        const hazures = data.replace(/[^0-9|,]/g,"").split(",");
-        if(hazures.includes(params.get("convertText"))){
-            alert("はずれ");
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title>ページタイトル</title>
+    <style>
+        
+        #qrcode > img{
+            width: 80vw;
+            text-align: center;
         }
-        // QRコード生成
-        const qrcode = new QRCode(document.getElementById("qrcode"), {
-            text: params.get("convertText"),
-            width: 512,
-            height: 512,
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.M
-        });
-    })
-</script>
+        #qrcode{
+            width:fit-content;
+        }
+    </style>
+</head>
+
+<body>
+        <h2 id="num"></h2>
+        <div id="qrcode"></div>
+
+    <script type="text/javascript" src="qrcode.min.js"></script>
+    <script type="text/javascript">
+        const params = (new URL(document.location)).searchParams;
+        if(params.get("c") === null || params.get("c") === "") {
+            location.href = "index.html?error=true";
+        }
+        // CSV読み込み
+        fetch("hazure.csv")
+            .then(response => response.text())
+            .then(data => {
+                const hazures = data.replace(/[^0-9|,]/g, "").split(",");
+                if (hazures.includes(params.get("c"))) {
+                    alert("はずれ");
+                }else{
+                document.getElementById("num").innerHTML = params.get("c");
+                // QRコード生成
+                const qrcode = new QRCode(document.getElementById("qrcode"), {
+                    text: params.get("c"),
+                    width: 512,
+                    height: 512,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+                }
+            })
+    </script>
+</body>
+
+</html>

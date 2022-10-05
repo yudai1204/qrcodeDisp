@@ -3,16 +3,29 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8" />
+        <link href="css/bootstrap.min.css" rel="stylesheet">
         <title>
-
+            ページタイトル
         </title>
     </head>
     <body>
-        <div class="mainbody">
-            <form action="qr.html" method="get">
-                <input type="number" name="convertText">
-                <input type="submit" value="QRコードを表示">
+        <div class="container-fluid">
+            <form action="qr.html" method="get" class="center-block col-sm-6 col-md-6">
+                <div id="note"></div>
+                <div class="form-group mt-3">
+                    <label>数字</label>
+                    <input class="form-control" placeholder="数字を入力…" type="number" name="c" required>
+                </div>
+                    <input class="form-control btn btn-primary mt-2" type="submit" value="QRコードを表示">
             </form>
         </div>
+        <script type="text/javascript">
+            const params = (new URL(document.location)).searchParams;
+            if(params.get("error") == "true"){
+                document.getElementById("note").innerHTML = "正しく入力してください";
+            }
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

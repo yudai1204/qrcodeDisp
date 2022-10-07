@@ -5,24 +5,32 @@
         <meta charset="utf-8" />
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <title>
-            ページタイトル
+            KRYTACオーナーズミーティング受付
         </title>
     </head>
     <body>
         <div class="container-fluid">
             <form action="qr.html" method="get" class="center-block col-sm-6 col-md-6">
                 <div id="note"></div>
+                <p class="form-group mt-3">
+                    受注番号を入力し、2次元バーコードを表示してください。<br>
+表示されたバーコードは受付時にご提示ください。
+                </p>
                 <div class="form-group mt-3">
-                    <label>数字</label>
-                    <input class="form-control" placeholder="数字を入力…" type="number" name="c" required>
+                    <label>受付番号</label>
+                    <input class="form-control" placeholder="入力…" type="number" name="c" required>
                 </div>
-                    <input class="form-control btn btn-primary mt-2" type="submit" value="QRコードを表示">
+                    <input class="form-control btn btn-primary mt-2" type="submit" value="表示する">
+                    <p class="form-group mt-3">
+                    ※イベント当日スマートフォン等のお持ち込みが難しい方は<br>
+                    表示されたバーコードを印刷してイベント当日お持ちください。
+                    </p>
             </form>
         </div>
         <script type="text/javascript">
             const params = (new URL(document.location)).searchParams;
             if(params.get("error") == "true"){
-                document.getElementById("note").innerHTML = "正しく入力してください";
+                document.getElementById("note").innerHTML = `<span class="text-red">正しく入力してください</span>`;
             }
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

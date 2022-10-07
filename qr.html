@@ -1,29 +1,52 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta charset="utf-8" />
-    <title>ページタイトル</title>
+    <title>KRYTACオーナーズミーティング受付</title>
     <style>
-        
-        #qrcode > img{
+        #qrcode>img {
             width: 80vw;
             text-align: center;
+            margin: 0 auto;
         }
-        #qrcode{
-            width:fit-content;
+
+        @media screen and (min-width: 600px) {
+            #qrcode>img {
+            width: 600px;
+        }
+        }
+
+        #qrcode {
+            width: fit-content;
+            margin: 0 auto;
+        }
+        body{
+            text-align: center;
+        }
+        .hidden{
+            display: none;
+        }
+        .red{
+            color:red;
         }
     </style>
 </head>
 
 <body>
-        <h2 id="num"></h2>
-        <div id="qrcode"></div>
+    <h2 id="num"></h2>
+    <div id="hazure" class="hidden">
+        <h2 class="red">
+        該当の受注番号はありません
+        </h2>
+    </div>
+    <div id="qrcode"></div>
 
     <script type="text/javascript" src="qrcode.min.js"></script>
     <script type="text/javascript">
         const params = (new URL(document.location)).searchParams;
-        if(params.get("c") === null || params.get("c") === "") {
+        if (params.get("c") === null || params.get("c") === "") {
             location.href = "index.html?error=true";
         }
         // CSV読み込み
@@ -32,18 +55,18 @@
             .then(data => {
                 const hazures = data.replace(/[^0-9|,]/g, "").split(",");
                 if (hazures.includes(params.get("c"))) {
-                    alert("はずれ");
-                }else{
-                document.getElementById("num").innerHTML = params.get("c");
-                // QRコード生成
-                const qrcode = new QRCode(document.getElementById("qrcode"), {
-                    text: params.get("c"),
-                    width: 512,
-                    height: 512,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.M
-                });
+                    document.getElementById("hazure").classList.remove("hidden");
+                } else {
+                    document.getElementById("num").innerHTML = params.get("c");
+                    // QRコード生成
+                    const qrcode = new QRCode(document.getElementById("qrcode"), {
+                        text: params.get("c"),
+                        width: 512,
+                        height: 512,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
                 }
             })
     </script>
